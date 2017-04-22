@@ -13,5 +13,6 @@ setup(
     entry_points='''
         [console_scripts]
         describe-availability-zones=zone:describe_availability_zones
+        describe-instances=instance:describe_instances
     '''
 )
