@@ -5,7 +5,12 @@
 venv
 
 # python
-__pycache__
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+*.egg-info/
 
 # nifty-cloud-cli
 credential
+config.ini
