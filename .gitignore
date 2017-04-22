@@ -1,0 +1,11 @@
+# emacs
+*~
+
+# virtualenv
+venv
+
+# python
+__pycache__
+
+# nifty-cloud-cli
+credential
