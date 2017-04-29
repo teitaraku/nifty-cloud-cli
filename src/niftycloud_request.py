@@ -42,13 +42,9 @@ class NiftyCloudRequest():
         return base64.b64encode(digester.digest())
 
     def __calc_version1(self, payload):
-        print(payload)
         sorted_payload = sorted(payload.items())
-        print(sorted_payload)
         cannonical_string = ''
         for k, v in sorted_payload:
             cannonical_string = cannonical_string + k + v
         digester = hmac.new(bytes(self.secret_key, 'UTF-8'), bytes(cannonical_string, 'UTF-8'), hashlib.sha1)
-        print(sorted_payload)
-        print("cannonical_string: ", cannonical_string)
         return base64.b64encode(digester.digest())
