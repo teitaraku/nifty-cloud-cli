@@ -7,15 +7,14 @@ from itertools import zip_longest
 @click.option('--instance-id', multiple=True)
 @click.option('--tenancy', type=click.Choice(['default', 'dedicated', 'all']), multiple=True)
 def describe_instances(instance_id, tenancy):
-    action = 'DescribeInstances'
 
-    payload = {}
+    payload = {'Action': 'DescribeInstances'}
     for i, e in enumerate(zip_longest(instance_id, tenancy)):
-        _instance_id, _tenancy = e
-        payload.update({'InstanceId.' + str(i+1): _instance_id if _instance_id is not None else ''})
-        payload.update({'Tenancy.' + str(i+1): _tenancy if _tenancy is not None else 'default'})
+        instance_id_, tenancy_ = e
+        payload.update({'InstanceId.' + str(i+1): instance_id_ if instance_id_ is not None else ''})
+        payload.update({'Tenancy.' + str(i+1): tenancy_ if tenancy_ is not None else 'default'})
 
-    res = NiftyCloudRequest(action).request(payload)
+    res = NiftyCloudRequest().request(payload)
     NiftyCloudParser(res).simple()
 
 @click.command()
@@ -26,9 +25,7 @@ def describe_instances(instance_id, tenancy):
 @click.option('--force', is_flag=False)
 @click.option('--tenancy', type=click.Choice(['default', 'dedicated', 'all']))
 def modify_instance_attribute(instance_id, attribute, value, nifty_reboot, force, tenancy):
-    action = 'ModifyInstanceAttribute'
-
-    payload = {}
+    payload = {'Action': 'ModifyInstanceAttribute'}
     payload.update({'InstanceId': instance_id})
     payload.update({'Attribute': attribute})
     payload.update({'Value': value})
@@ -37,5 +34,5 @@ def modify_instance_attribute(instance_id, attribute, value, nifty_reboot, force
         payload.update({'Force': 'true' if force is True else 'false'})
     payload.update({'Tenancy': tenancy})
 
-    res = NiftyCloudRequest(action).request(payload)
+    res = NiftyCloudRequest().request(payload)
     NiftyCloudParser(res).simple()
