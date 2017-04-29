@@ -30,19 +30,25 @@ class NiftyCloudRequest():
 
         payload.update({'Signature': signature})
 
-        return requests.get(request_url, params=payload)
+        response = requests.get(request_url, params=payload)
+        print(response.url)
+        return response
 
     def __calc_version0(self, payload):
         action = payload['Action']
         timestamp = payload['Timestamp']
-        string_to_sign = action + timestamp
-        digester = hmac.new(bytes(self.secret_key, 'UTF-8'), bytes(string_to_sign, 'UTF-8'), hashlib.sha1)
+        cannonical_string = action + timestamp
+        digester = hmac.new(bytes(self.secret_key, 'UTF-8'), bytes(cannonical_string, 'UTF-8'), hashlib.sha1)
         return base64.b64encode(digester.digest())
 
     def __calc_version1(self, payload):
-        string_to_sign = ''
-        for k, v in payload.items():
-            string_to_sign = string_to_sign + k + v
-        digester = hmac.new(bytes(self.secret_key, 'UTF-8'), bytes(string_to_sign, 'UTF-8'), hashlib.sha1)
-        print("string_to_sign: ", string_to_sign)
+        print(payload)
+        sorted_payload = sorted(payload.items())
+        print(sorted_payload)
+        cannonical_string = ''
+        for k, v in sorted_payload:
+            cannonical_string = cannonical_string + k + v
+        digester = hmac.new(bytes(self.secret_key, 'UTF-8'), bytes(cannonical_string, 'UTF-8'), hashlib.sha1)
+        print(sorted_payload)
+        print("cannonical_string: ", cannonical_string)
         return base64.b64encode(digester.digest())
