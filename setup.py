@@ -15,5 +15,8 @@ setup(
         describe-availability-zones=zone:describe_availability_zones
         describe-instances=instance:describe_instances
         modify-instance-attribute=instance:modify_instance_attribute
+        nifty-describe-separate-instance-rules=separate_rule:nifty_describe_separate_instance_rules
+        nifty-create-separate-instance-rule=separate_rule:nifty_create_separate_instance_rule
+        nifty-delete-separate-instance-rule=separate_rule:nifty_delete_separate_instance_rule
     '''
 )
