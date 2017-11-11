@@ -7,7 +7,7 @@ from itertools import zip_longest
 @click.option('--action', help='[required] Action name')
 @click.option('--key', multiple=True)
 @click.option('--value', multiple=True)
-def almighty_request(action, key, value):
+def anything_request(action, key, value):
 
     payload = {'Action': action}
     for e in zip_longest(key, value):
