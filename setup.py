@@ -12,6 +12,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
+        anything=anything:anything_request
         describe-availability-zones=zone:describe_availability_zones
         describe-instances=instance:describe_instances
         modify-instance-attribute=instance:modify_instance_attribute
