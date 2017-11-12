@@ -1,14 +1,17 @@
 from setuptools import setup
 
 setup(
-    name='NiftyCloudCli',
+    name='nifcloud_computing_cli',
     version='0.1',
-    description='python CLI for NiftyCloud',
+    description='python CLI for NifCloud Computing',
     author='clutter',
     author_email='clutter.mk2@gmail.com',
     package_dir={'': 'src'},
     install_requires=[
-        'Click', 'ConfigParser', 'Requests', 'BeautifulSoup4'
+        'click',
+        'ConfigParser',
+        'Requests',
+        'BeautifulSoup4',
     ],
     entry_points='''
         [console_scripts]
