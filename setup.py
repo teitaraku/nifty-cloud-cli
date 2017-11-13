@@ -9,9 +9,11 @@ setup(
     package_dir={'': 'src'},
     install_requires=[
         'click',
-        'ConfigParser',
-        'Requests',
-        'BeautifulSoup4',
+        'configparser',
+        'requests',
+        'beautifulsoup4',
+        'py_nifcloud',
+        'lxml'
     ],
     entry_points='''
         [console_scripts]

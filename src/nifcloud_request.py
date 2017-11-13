@@ -4,8 +4,9 @@ import requests
 from datetime import datetime
 import hmac, hashlib, base64
 from itertools import zip_longest
+from py_nifcloud.computing_client import ComputingClient
 
-class NiftyCloudRequest():
+class NifCloudRequest():
     def __init__(self):
         config = configparser.SafeConfigParser()
         config.read('./config.ini')
@@ -13,26 +14,10 @@ class NiftyCloudRequest():
         self.signature_version = os.getenv("SIGNATURE_VERSION", config.get('common', 'SIGNATURE_VERSION'))
         self.access_key = os.getenv("ACCESS_KEY", config.get('user', 'ACCESS_KEY'))
         self.secret_key = os.getenv("SECRET_ACCESS_KEY", config.get('user', 'SECRET_ACCESS_KEY'))
+        self.client = ComputingClient(region_name="jp-east-1", access_key_id=self.access_key, secret_access_key=self.secret_key)
 
     def request(self, payload):
-        request_url = self.endpoint# + '?Action=' + self.action
-        now = datetime.now()
-        timestamp = now.strftime("%Y-%m-%dT%H:%M:%S") + ".%03dZ" % (now.microsecond // 1000)
-
-        payload.update({'AccessKeyId': self.access_key})
-        payload.update({'SignatureVersion': self.signature_version})
-        payload.update({'Timestamp': timestamp})
-
-        if self.signature_version is '0':
-            signature = self.__calc_version0(payload)
-        elif self.signature_version is '1':
-            signature = self.__calc_version1(payload)
-
-        payload.update({'Signature': signature})
-
-        response = requests.get(request_url, params=payload)
-        print(response.url)
-        return response
+        return self.client.request(method="GET", query=payload)
 
     def __calc_version0(self, payload):
         action = payload['Action']

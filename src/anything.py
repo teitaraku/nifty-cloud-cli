@@ -1,6 +1,6 @@
 import click
-from niftycloud_request import NiftyCloudRequest
-from niftycloud_parser import NiftyCloudParser
+from nifcloud_request import NifCloudRequest
+from nifcloud_parser import NifCloudParser
 from itertools import zip_longest
 
 @click.command()
@@ -14,5 +14,5 @@ def anything_request(action, key, value):
         key_, value_ = e
         payload.update({key_: value_})
 
-    res = NiftyCloudRequest().request(payload)
-    NiftyCloudParser(res).simple()
+    res = NifCloudRequest().request(payload)
+    NifCloudParser(res).xml()

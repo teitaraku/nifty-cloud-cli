@@ -1,6 +1,6 @@
 import click
-from niftycloud_request import NiftyCloudRequest
-from niftycloud_parser import NiftyCloudParser
+from nifcloud_request import NifCloudRequest
+from nifcloud_parser import NifCloudParser
 from itertools import zip_longest
 
 @click.command()
@@ -11,8 +11,8 @@ def nifty_describe_separate_instance_rules(rule_name):
         for i, name in enumerate(rule_name):
             payload.update({'SeparateInstanceRuleName.' + str(i+1): name})
     #Filter未対応
-    res = NiftyCloudRequest().request(payload)
-    NiftyCloudParser(res).simple()
+    res = NifCloudRequest().request(payload)
+    NifCloudParser(res).xml()
 
 @click.command()
 @click.option('--rule-name', help='[required]')
@@ -33,8 +33,8 @@ def nifty_create_separate_instance_rule(rule_name, instance_id, unique_id, descr
         payload.update({'SeparateInstanceRuleDescription': description})
     payload.update({'Placement.AvailabilityZone': availability_zone})
 
-    res = NiftyCloudRequest().request(payload)
-    NiftyCloudParser(res).simple()
+    res = NifCloudRequest().request(payload)
+    NifCloudParser(res).xml()
 
 @click.command()
 @click.option('--rule-name', help='[required]')
@@ -42,5 +42,5 @@ def nifty_delete_separate_instance_rule(rule_name):
     payload = {'Action': 'NiftyDeleteSeparateInstanceRule'}
     payload.update({'SeparateInstanceRuleName': rule_name})
 
-    res = NiftyCloudRequest().request(payload)
-    NiftyCloudParser(res).simple()
+    res = NifCloudRequest().request(payload)
+    NifCloudParser(res).xml()

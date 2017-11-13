@@ -1,7 +1,7 @@
 import click
-from niftycloud_request import NiftyCloudRequest
-from niftycloud_parser import NiftyCloudParser
 from itertools import zip_longest
+from nifcloud_request import NifCloudRequest
+from nifcloud_parser import NifCloudParser
 
 @click.command()
 @click.option('--instance-id', multiple=True)
@@ -14,8 +14,8 @@ def describe_instances(instance_id, tenancy):
         payload.update({'InstanceId.' + str(i+1): instance_id_ if instance_id_ is not None else ''})
         payload.update({'Tenancy.' + str(i+1): tenancy_ if tenancy_ is not None else 'default'})
 
-    res = NiftyCloudRequest().request(payload)
-    NiftyCloudParser(res).simple()
+    res = NifCloudRequest().request(payload)
+    print(NifCloudParser(res).xml())
 
 @click.command()
 @click.option('--instance-id', help='[required] instance name')
@@ -34,5 +34,5 @@ def modify_instance_attribute(instance_id, attribute, value, nifty_reboot, force
         payload.update({'Force': 'true' if force is True else 'false'})
     payload.update({'Tenancy': tenancy})
 
-    res = NiftyCloudRequest().request(payload)
-    NiftyCloudParser(res).simple()
+    res = NifCloudRequest().request(payload)
+    NifCloudParser(res).xml()
